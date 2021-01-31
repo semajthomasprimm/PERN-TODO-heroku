@@ -10,7 +10,6 @@ const path = require('path');
 const PORT = process.env.PORT || 5000;
 
 // proccess.env.PORT
-// process.env.NODE_ENV => production or undefined
 
 //middleware
 app.use(cors());

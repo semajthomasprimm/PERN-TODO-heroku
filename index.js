@@ -16,7 +16,7 @@ app.use(cors());
 // gives us access to request body
 app.use(express.json()); // req.body
 
-app.use(express.static(path.join(__dirname, "client/build")));
+//app.use(express.static(path.join(__dirname, "client/build")));
 
 if(process.env.NODE_ENV === "production"){
     // server static content

@@ -25,7 +25,7 @@ if(process.env.NODE_ENV === "production"){
 //ROUTES//
 
 // Create a todo
-app.post("/todos", async(req, res) => {
+app.post("/api/todos", async(req, res) => {
     // await; waits for function to complete before continuing
     try{
         const { description } = req.body;
@@ -42,7 +42,7 @@ app.post("/todos", async(req, res) => {
 });
 
 // Get all todos
-app.get("/todos", async(req, res) =>{
+app.get("/api/todos", async(req, res) =>{
     try{
         const allTodos = await pool.query("SELECT * FROM todo;");
         res.json(allTodos.rows);
@@ -53,7 +53,7 @@ app.get("/todos", async(req, res) =>{
 });
 
 // Get a todo
-app.get("/todos/:id", async(req, res) =>{
+app.get("/api/todos/:id", async(req, res) =>{
     try{
         const { id } = req.params;
         const todo = await pool.query(
@@ -68,7 +68,7 @@ app.get("/todos/:id", async(req, res) =>{
 
 
 // Update a todo
-app.put("/todos/:id", async(req, res) =>{
+app.put("/api/todos/:id", async(req, res) =>{
     try {
         const {id} = req.params;
         const {description} = req.body;
@@ -84,7 +84,7 @@ app.put("/todos/:id", async(req, res) =>{
 
 
 // Delete a todo
-app.delete("/todos/:id", async(req, res) =>{
+app.delete("/api/todos/:id", async(req, res) =>{
     try {
         const { id } = req.params;
         const deleteTodo = await pool.query(
@@ -97,12 +97,12 @@ app.delete("/todos/:id", async(req, res) =>{
     }
 });
 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
+});
+
 // need to listen to port # to start server
 app.listen(PORT, () =>{
     // callback function to show how server has started
     console.log(`Server has started on port ${PORT}`);
-});
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build/index.html"));
 });

@@ -6,8 +6,12 @@ const devConfig = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD
 
 const proConfig = process.env.DATABASE_URL;
 
+if(process.env.NODE_ENV === "production")
+    console.log('CONNECTED TO DB :D');
+
 const pool = new Pool({
     connectionString: process.env.NODE_ENV === "production" ? proConfig : devConfig,
+    ssl: { rejectUnauthorized: false}
 });
 
 //console.log(pool.options.connectionString);

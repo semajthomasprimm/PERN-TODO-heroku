@@ -35,6 +35,7 @@ app.post("/todos", async(req, res) => {
             [description]
         );
         res.json(newTodo.rows[0]);
+        res.sendStatus(200);
     } catch(err){
         console.error(err.message);
     }

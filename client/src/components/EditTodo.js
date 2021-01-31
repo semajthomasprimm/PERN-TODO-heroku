@@ -9,11 +9,8 @@ const EditTodo = ({ todo }) => {
         try {
             const body = { description };
 
-            
-
             // eslint-disable-next-line
-            const response  = await fetch(
-                `/todos/${todo.todo_id}`, {
+            const response  = await fetch(`/todos/${todo.todo_id}`, {
                     method: "PUT",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(body)

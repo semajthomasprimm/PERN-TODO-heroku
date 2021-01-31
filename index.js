@@ -22,7 +22,6 @@ if(process.env.NODE_ENV === "production"){
     // server static content
     app.use(express.static(path.join(__dirname, "client/build")));
 }
-
 //ROUTES//
 
 // Create a todo
@@ -34,8 +33,9 @@ app.post("/todos", async(req, res) => {
             "INSERT INTO todo (description) VALUES($1) RETURNING *;",
             [description]
         );
-        res.json(newTodo.rows[0]);
         res.sendStatus(200);
+        res.json(newTodo.rows[0]);
+        
     } catch(err){
         console.error(err.message);
     }
@@ -46,6 +46,7 @@ app.get("/todos", async(req, res) =>{
     try{
         const allTodos = await pool.query("SELECT * FROM todo;");
         res.json(allTodos.rows);
+        res.sendStatus(200);
     } catch(err){
         console.error(err.message);
     }
@@ -96,12 +97,12 @@ app.delete("/todos/:id", async(req, res) =>{
     }
 });
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build/index.html"));
-});
-
 // need to listen to port # to start server
 app.listen(PORT, () =>{
     // callback function to show how server has started
     console.log(`Server has started on port ${PORT}`);
+});
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
